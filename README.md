@@ -10,7 +10,7 @@ Cung cấp giải pháp giám sát an toàn lao động tự động.
 
 ##🚀 Hướng dẫn sử dụng
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)]([https://colab.research.google.com/drive/1CjIZpHNCT_b6lItdwtIgQbrq9sv807nH#scrollTo=_7gwXkaPQOhZ](https://colab.research.google.com/drive/1q8eSCoqspfTDlR--xRAlUPVNaz59_wzG?usp=sharing))
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1q8eSCoqspfTDlR--xRAlUPVNaz59_wzG?usp=sharing)
 
 Mở Notebook: Click vào biểu tượng Open In Colab ở phía trên.
 
