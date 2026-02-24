@@ -34,5 +34,7 @@ OpenCV: Xử lý hình ảnh và video đầu vào.
 
 Google Colab: Môi trường huấn luyện và chạy thử nghiệm.
 
+
 ##📊 Kết quả Demo
-<img width="1500" height="1101" alt="image" src="https://github.com/user-attachments/assets/feb7a659-b920-460b-adf2-7a631b7dbc73" />
+![89572463-0990-4f55-a2e6-62982f7faf95](https://github.com/user-attachments/assets/ef6ab985-6d63-43c1-9d07-d9c15dd778d4)
+
