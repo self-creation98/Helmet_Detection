@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Datasets, model outputs, and heavy artifacts
+data/
+datasets/
+runs/
+weights/
+*.pt
+*.onnx
+*.engine
+*.zip
+
+# Local files
+.env
+*.log

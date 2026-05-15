@@ -1,40 +1,111 @@
-##⛑️ Safety Helmet Detection (YOLOv10)
-Dự án này sử dụng mô hình YOLOv10 để tự động nhận diện người lao động có trang bị mũ bảo hiểm trong các môi trường công nghiệp hoặc tham gia giao thông. Notebook được thiết kế để chạy hoàn toàn trên môi trường Google Colab, tận dụng miễn phí GPU T4.
+# Safety Helmet Detection with YOLOv10
 
-##🎯 Mục tiêu dự án
-Tự động phát hiện đối tượng: Người đội mũ (Helmet) và Người không đội mũ (No Helmet).
+Dự án huấn luyện và chạy inference mô hình YOLOv10 để phát hiện người có đội mũ bảo hộ và không đội mũ bảo hộ trong ảnh hoặc video.
 
-Ứng dụng công nghệ Deep Learning mới nhất (YOLOv10) để đạt tốc độ xử lý nhanh và độ chính xác cao.
+## Điểm chính
 
-Cung cấp giải pháp giám sát an toàn lao động tự động.
+- Huấn luyện mô hình YOLOv10 trên dataset `Helmet` / `No Helmet`.
+- Chạy dự đoán trên ảnh, video, thư mục ảnh hoặc nguồn stream mà Ultralytics hỗ trợ.
+- Có thể chạy bằng notebook trên Google Colab hoặc bằng CLI Python trong môi trường local.
+- Cấu trúc project đã tách phần pipeline ra khỏi notebook để dễ bảo trì và mở rộng.
 
-##🚀 Hướng dẫn sử dụng
+## Cấu trúc
+
+```text
+.
+├── Project_YOLOv10_Image_Dectection.ipynb
+├── src/
+│   └── safety_helmet_detection/
+│       ├── cli.py
+│       ├── config.py
+│       └── yolo_pipeline.py
+├── requirements.txt
+├── pyproject.toml
+└── README.md
+```
+
+## Chạy trên Google Colab
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1q8eSCoqspfTDlR--xRAlUPVNaz59_wzG?usp=sharing)
 
-Mở Notebook: Click vào biểu tượng Open In Colab ở phía trên.
+Khuyến nghị chọn GPU trước khi chạy:
 
-Cài đặt môi trường: * Chạy ô code đầu tiên để cài đặt thư viện ultralytics và tải cấu hình mô hình YOLOv10.
+```text
+Runtime -> Change runtime type -> T4 GPU
+```
 
-Đảm bảo bạn đã đổi Runtime sang T4 GPU (Runtime -> Change runtime type -> T4 GPU).
+Notebook đã được sắp xếp theo luồng:
 
-Dữ liệu (Dataset):
+1. Cài đặt thư viện.
+2. Tải pretrained weights và dataset.
+3. Huấn luyện mô hình.
+4. Đánh giá trên tập test.
+5. Chạy dự đoán và lưu kết quả.
 
-Notebook sẽ tự động tải bộ dữ liệu (nếu có link gdown) hoặc hướng dẫn bạn upload ảnh/video cần nhận diện lên thư mục /content/.
+## Chạy local
 
-Chạy nhận diện (Inference):
+Tạo môi trường ảo và cài dependency:
 
-Kết quả ảnh/video đã được vẽ khung nhận diện (Bounding Box) sẽ được lưu tại thư mục runs/detect/predict/.
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+pip install -e .
+```
 
-##🛠️ Công nghệ sử dụng
-YOLOv10: Kiến trúc mạng nơ-ron tích chập tối ưu cho việc phát hiện vật thể thời gian thực.
-[YOLOv10 by THU-MIG](https://github.com/THU-MIG/yolov10)
+Huấn luyện:
 
-OpenCV: Xử lý hình ảnh và video đầu vào.
+```bash
+helmet-detect train ^
+  --data data/safety_helmet_data/data.yaml ^
+  --model weights/yolov10n.pt ^
+  --epochs 100 ^
+  --imgsz 640 ^
+  --batch 16
+```
 
-Google Colab: Môi trường huấn luyện và chạy thử nghiệm.
+Đánh giá:
 
+```bash
+helmet-detect val ^
+  --weights runs/detect/helmet-yolov10/weights/best.pt ^
+  --data data/safety_helmet_data/data.yaml ^
+  --split test
+```
 
-##📊 Kết quả Demo
-![89572463-0990-4f55-a2e6-62982f7faf95](https://github.com/user-attachments/assets/ef6ab985-6d63-43c1-9d07-d9c15dd778d4)
+Dự đoán:
 
+```bash
+helmet-detect predict ^
+  --weights runs/detect/helmet-yolov10/weights/best.pt ^
+  --source samples/construction-worker.jpg ^
+  --output runs/detect/predict ^
+  --conf 0.25
+```
+
+Kết quả inference được lưu trong thư mục `runs/detect/predict`.
+
+## Dataset
+
+Notebook hiện tải dataset bằng Google Drive ID:
+
+```text
+1l7USE19C7ABIjBjArB4Rb9w3OL6k86xP
+```
+
+Sau khi giải nén, file cấu hình dataset cần có dạng:
+
+```text
+safety_helmet_data/
+└── data.yaml
+```
+
+## Công nghệ
+
+- [YOLOv10 by THU-MIG](https://github.com/THU-MIG/yolov10)
+- [Ultralytics](https://docs.ultralytics.com/)
+- OpenCV
+- Google Colab
+
+## Demo
+
+![Safety helmet detection demo](https://github.com/user-attachments/assets/ef6ab985-6d63-43c1-9d07-d9c15dd778d4)

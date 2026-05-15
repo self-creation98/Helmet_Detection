@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "safety-helmet-detection"
+version = "0.1.0"
+description = "Train and run YOLOv10 models for safety helmet detection."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "ultralytics>=8.1.0",
+    "opencv-python>=4.8.0",
+    "gdown>=5.0.0",
+    "PyYAML>=6.0",
+]
+
+[project.scripts]
+helmet-detect = "safety_helmet_detection.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
